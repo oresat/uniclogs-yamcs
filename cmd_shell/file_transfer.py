@@ -1,5 +1,6 @@
 import os
 import struct
+import zlib
 from time import sleep
 
 from . import UPLINK_SOCKET, \
@@ -103,7 +104,7 @@ def file_upload(filepath: str,
                 fails += 1
                 continue
 
-            if reply[0] != len(seg):
+            if reply[0] != (zlib.crc32(seg) & 0xffffffff):
                 print('  fail ', fails, ': reply len failed')
                 fails += 1
             else:
