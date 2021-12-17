@@ -105,7 +105,7 @@ def file_upload(filepath: str,
                 continue
 
             if reply[0] != (zlib.crc32(seg) & 0xffffffff):
-                print('  fail ', fails, ': reply len failed')
+                print('Got CRC32 = ', reply[0] , '|| Expected CRC32 = ', (zlib.crc32(seg) & 0xffffffff))
                 fails += 1
             else:
                 print('  seg', i, 'ack')
