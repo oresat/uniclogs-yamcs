@@ -104,10 +104,11 @@ def file_upload(filepath: str,
                 fails += 1
                 continue
 
-            if (reply[0]) != (zlib.crc32(seg) % 2**32):
-                print('Got CRC32 = ', (reply[0]) , '|| Expected CRC32 = ', (zlib.crc32(seg) %2**32))
+            if (reply[0] + 2**32) != (zlib.crc32(seg) % 2**32):
+                print('Got CRC32 = ', (reply[0] + 2**32) , '|| Expected CRC32 = ', (zlib.crc32(seg) %2**32))
                 fails += 1
             else:
+                print("got correct CRC32 = ", (reply[0] + 2**32))
                 print('  seg', i, 'ack')
                 break  # segment sent was successful
 
