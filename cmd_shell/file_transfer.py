@@ -93,14 +93,14 @@ def file_upload(filepath: str,
             try:
                 data_raw, _ = DOWNLINK_SOCKET.recvfrom(BUFFER_SIZE)
             except Exception:
-                print('  fail', fails, ': reply timeout')
+                print(f'[{fails} FAILURES]: response timed out!')
                 fails += 1
                 continue
 
             try:
                 reply = struct.unpack('<i', data_raw[8:])
             except Exception:
-                print('  fail', fails, ': struct unpack failed')
+                print(f'[{fails} FAILURES]: struct unpack failed with payload: {data_raw}')
                 fails += 1
                 continue
             if (reply[0] + 2**32) != (zlib.crc32(seg)):
@@ -108,7 +108,7 @@ def file_upload(filepath: str,
                 fails += 1
             else:
                 print("got correct CRC32 = ", (reply[0] + 2**32))
-                print('  seg', i, 'ack') 
+                print('  seg', i, 'ack')
                 break  # segment sent was successful
 
         i += 1
