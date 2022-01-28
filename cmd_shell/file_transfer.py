@@ -108,7 +108,7 @@ def file_upload(filepath: str,
                 fails += 1
             else:
                 print("got correct CRC32 = ", (reply[0] + 2**32))
-                print('  seg', i, 'ack')
+                print('  seg', i, 'ack') 
                 break  # segment sent was successful
 
         i += 1
