@@ -103,6 +103,11 @@ def file_upload(filepath: str,
                 print(f'[{fails} FAILURES]: struct unpack failed with payload: {data_raw}')
                 fails += 1
                 continue
+            if (reply[0] > 0):
+                if (reply[0] != zlib.crc32(seg)):
+                    print('Got CRC32 = ', (reply[0]) , '|| Expected CRC32 = ', (zlib.crc32(seg) ))
+                    fails +=1
+                    continue
             if (reply[0] + 2**32) != (zlib.crc32(seg)):
                 print('Got CRC32 = ', (reply[0] + 2**32) , '|| Expected CRC32 = ', (zlib.crc32(seg) ))
                 fails += 1
