@@ -109,7 +109,7 @@ def file_upload(filepath: str,
                 print("Resp crc < 0, adjusting")
                 temp_val = temp_val + 2**32
                 continue
-            if (temp_val != (zlib.crc32(seg)):
+            if (temp_val != (zlib.crc32(seg))):
                 print('Got CRC32 = ', (temp_val) , '|| Expected CRC32 = ', (zlib.crc32(seg) ))
                 fails += 1
             else:
