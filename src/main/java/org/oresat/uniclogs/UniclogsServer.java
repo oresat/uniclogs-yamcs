@@ -1,9 +1,7 @@
 package org.oresat.uniclogs;
 
 
-import org.yamcs.InitException;
-import org.yamcs.YConfiguration;
-import org.yamcs.YamcsServer;
+import org.yamcs.*;
 import org.yamcs.http.HttpServer;
 import org.yamcs.logging.Log;
 
@@ -19,6 +17,13 @@ public class UniclogsServer extends HttpServer {
         // Call the parent server init
         super.init(instanceName, serviceName, config);
         LOG.info("Started " + serviceName + ":" + instanceName + " with config: " + config + " from: " + config.configDirectory);
+
+        // Loac Config Plugins
+        PluginManager plugins = server.getPluginManager();
+        plugins.getPlugin(ConfigSpecLoader.class);
+
+        // Load Custom Config Specs
+        server.addConfigurationSection(ConfigScope.YAMCS_INSTANCE, "payloadConfig", new PayloadConfig());
 
         // Add listeners
         server.addReadyListener(new PrepareEnvironment());
