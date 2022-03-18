@@ -20,6 +20,11 @@ services:
       backFiller:
         enabled: false
         warmupTime: 60
+  - class: org.oresat.uniclogs.satnogs.SatnogsTelemetryPlugin
+    args:
+      api-token: asdf1234
+      api-poll-interval: 10
+      norad-id: 99410
 
 dataLinks:
   - name: beacon-tm-realtime
